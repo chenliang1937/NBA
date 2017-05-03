@@ -1,0 +1,76 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.1"
+
+    defaultConfig {
+        applicationId "com.ya.mei.nba"
+        minSdkVersion 16
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+
+    lintOptions { //忽略无效包的link错误
+        disable 'InvalidPackage'
+    }
+
+    packagingOptions { //避免因多个jar包中含有以下相同的文件，导致打包时因担心相互覆盖问题而提示报错
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
+
+    buildTypes {
+        release {
+            applicationIdSuffix ".release"//修改applicationID(正式版/debug版)
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        dev {
+            applicationIdSuffix ".dev"
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main {
+            java.srcDirs = ['src/main/java', 'src/main/java-gen']
+        }
+    }
+
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile "com.android.support:support-v4:23.0.1"
+    compile "com.android.support:appcompat-v7:23.0.1"
+    compile "com.android.support:design:23.0.1"
+    compile "com.android.support:recyclerview-v7:23.0.1"
+    compile "com.android.support:cardview-v7:23.0.1"
+    compile "com.jakewharton:butterknife:7.0.1+"
+    compile "com.github.bumptech.glide:glide:3.6.1"
+    compile "de.greenrobot:eventbus:2.4.0+"
+    compile "com.pnikosis:materialish-progress:1.5+"
+    compile "de.hdodenhof:circleimageview:1.3.0+"
+    compile "de.psdev.licensesdialog:licensesdialog:1.8.0+"
+    compile "com.squareup.retrofit:converter-gson:2.0.0-beta2"
+    compile "io.reactivex:rxandroid:1.0.1"
+    compile "io.reactivex:rxjava:1.0.16"
+    compile "com.squareup.retrofit:adapter-rxjava:2.0.0-beta2"
+    compile "de.greenrobot:greendao:2.0.0"
+    compile "com.brucetoo.pickview:library:1.1.1"
+    compile "com.thefinestartist:finestwebview:1.1.2"
+    compile "com.squareup.retrofit:retrofit:2.0.0-beta2"
+    compile 'com.ogaclejapan.smarttablayout:library:1.6.0@aar'
+    compile 'com.ogaclejapan.smarttablayout:utils-v4:1.6.0@aar'
+    compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'
+    compile 'com.github.clans:fab:1.6.2'
+    compile 'com.jude:swipebackhelper:2.1.5'
+//    compile "im.fir:sdk:latest.integration@aar"
+//    debugCompile "com.squareup.leakcanary:leakcanary-android:1.3.1"
+//    releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:1.3.1"
+    compile files('libs/joda-time-2.8.2.jar')
+    compile project(':chartlibrary')
+}
